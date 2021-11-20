@@ -9,11 +9,15 @@ const app = express();
 // });
 
 // If the below is set at the beginning of the file, the other get request routes
-// would not be located
-app.get("*", (req, res) => {
-  res.send("This is not the path");
-});
+// // would not be located
+// app.get("*", (req, res) => {
+//   res.send("This is not the path");
+// });
 
+app.get("/r/:pathName", (req, res) => {
+  const { pathName } = req.params;
+  res.send(`<h1>Hello! This is the new ${pathName}</h1>`);
+});
 app.get("/", (req, res) => {
   res.send("This is the home page");
 });
@@ -24,6 +28,10 @@ app.get("/cats", (req, res) => {
 
 app.get("/dogs", (req, res) => {
   res.send("Whoof!!");
+});
+
+app.post("/cats", (req, res) => {
+  res.send("This is a post request to /cats...");
 });
 
 // app.get("*", (req, res) => {
