@@ -52,6 +52,16 @@ app.get("/comments/:id", (req, res) => {
     res.render("comments/show", {comment})
 })
 
+// Updating the content
+app.patch("/comments/:id", (req, res) => {
+  const { id } = req.params;
+  const textComment = req.body.comment 
+  const foundComment = comments.find(c => c.id === id)
+  foundComment.comment = textComment 
+  res.redirect("comments/index")
+  console.log("It's fine")
+})
+
 
 app.post("/tacos", (req, res) => {
     console.log(req.body);
