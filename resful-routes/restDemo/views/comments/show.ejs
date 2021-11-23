@@ -7,8 +7,12 @@
     <title>Show comments</title>
 </head>
 <body>
-    <h3>Comment id: <%= comment.id %> </h3>
+    <h3>Comment id:<%= comment.id %></h3>
     <div><%= comment.comment %> - <b><%= comment.username %></b></div>
     <a href="/comments">Back to index</a>
+    <a href="/comments/<%= comment.id %>/edit">EDIT COMMENT</a>
+    <form method="POST" action="/comments/<%= comment.id %>?_method=DELETE">
+        <button>DELETE</button>
+    </form>
 </body>
 </html>
