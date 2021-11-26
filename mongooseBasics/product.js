@@ -60,6 +60,12 @@ productSchema.methods.addcategory = function (newCat) {
   return this.save;
 };
 
+// Instance methods work basically on individual item in the Model class while static methods
+// work on the ehole Model class
+productSchema.statics.fireSale = function () {
+  return this.updateMany({}, { onSale: true, price: 0 });
+};
+
 const Product = mongoose.model("Product", productSchema);
 
 const findProduct = async () => {
@@ -71,7 +77,9 @@ const findProduct = async () => {
   console.log(foundProduct);
 };
 
-findProduct();
+Product.fireSale().then((res) => console.log(res));
+
+// findProduct();
 
 // const bike = new Product({
 //   name: "Tire Pump",
