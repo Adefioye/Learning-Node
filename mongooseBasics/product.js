@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
-    min: 0,
+    min: [0, "Price must be a positive value"],
   },
   onSale: {
     type: Boolean,
@@ -38,9 +38,40 @@ const productSchema = new mongoose.Schema({
       default: 0,
     },
   },
+  size: {
+    type: String,
+    enum: ["S", "M", "L"],
+  },
 });
 
+// Using instance methods
+// Setting a greet method on the Product model
+// productSchema.methods.greet = function () {
+//   console.log("Hey! Howdy! You are awesome!");
+// };
+
+productSchema.methods.toggleOnSale = function () {
+  this.onSale = !this.onSale;
+  return this.save;
+};
+
+productSchema.methods.addcategory = function (newCat) {
+  this.categories.push(newCat);
+  return this.save;
+};
+
 const Product = mongoose.model("Product", productSchema);
+
+const findProduct = async () => {
+  const foundProduct = await Product.findOne({ name: "Bike Helmet" });
+  console.log(foundProduct);
+  await foundProduct.toggleOnSale();
+  console.log(foundProduct);
+  await foundProduct.addcategory("Outdoor");
+  console.log(foundProduct);
+};
+
+findProduct();
 
 // const bike = new Product({
 //   name: "Tire Pump",
@@ -60,16 +91,16 @@ const Product = mongoose.model("Product", productSchema);
 // });
 
 // Learning to update an existing document in the collection
-Product.findOneAndUpdate(
-  { name: "Tire Pump" },
-  { price: -100 },
-  { new: true, runValidators: true }
-)
-  .then((data) => {
-    console.log("IT WORKED!");
-    console.log(data);
-  })
-  .catch((err) => {
-    console.log("OH NO ERROR!");
-    console.log(err);
-  });
+// Product.findOneAndUpdate(
+//   { name: "Tire Pump" },
+//   { size: "XL" },
+//   { new: true, runValidators: true }
+// )
+//   .then((data) => {
+//     console.log("IT WORKED!");
+//     console.log(data);
+//   })
+//   .catch((err) => {
+//     console.log("OH NO ERROR!");
+//     console.log(err);
+//   });
