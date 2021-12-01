@@ -13,6 +13,8 @@ const app = express();
 // app.get("*", (req, res) => {
 //   res.send("This is not the path");
 // });
+// Set config for serving static files like css for styling html pages
+app.use(express.static("public"));
 
 app.get("/r/:pathName", (req, res) => {
   const { pathName } = req.params;
