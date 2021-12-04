@@ -68,6 +68,12 @@ app.post("/farms/:id/products", async (req, res) => {
   res.send(farm);
 });
 
+app.delete("/farms/:id", async (req, res) => {
+  const { id } = req.params;
+  const farm = await Farm.findByIdAndDelete(id);
+  res.redirect("/farms");
+});
+
 // app.post("farms/:id/products", (req, res) => {
 //   res.
 // })
