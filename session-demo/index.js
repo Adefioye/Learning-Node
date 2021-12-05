@@ -19,6 +19,17 @@ app.get("/viewcount", (req, res) => {
   res.send(`YOU HAVE VIEWED THIS PAGE ${req.session.count} TIMES`);
 });
 
+app.get("/register", (req, res) => {
+  const { username = "Anonymous" } = req.query;
+  req.session.username = username;
+  res.redirect("/greet");
+});
+
+app.get("/greet", (req, res) => {
+  const { username } = req.session;
+  res.send(`You are welcome: ${username}`);
+});
+
 app.listen(3000, () => {
   console.log("APP LISTENING ON PORT 3000");
 });
